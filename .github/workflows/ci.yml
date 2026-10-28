@@ -31,6 +31,9 @@ jobs:
       - name: Run Tests
         run: npm test
 
+      - name: Test compiler version updater
+        run: python3 -B -m unittest discover -s scripts -p 'test_*.py'
+
       - name: Build
         run: npm run build
 
@@ -58,7 +61,7 @@ jobs:
         uses: ./
         with:
           compiler: 'xc8'
-          version: '3.10'
+          version: '4.00'
 
       - name: Verify XC8
         run: xc8-cc --version
