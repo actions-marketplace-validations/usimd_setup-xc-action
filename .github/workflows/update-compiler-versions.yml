@@ -11,12 +11,15 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      actions: write
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          token: ${{ secrets.WORKFLOW_UPDATE_TOKEN }}
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.3.2
+        uses: astral-sh/setup-uv@v10.3.2
 
       - name: Check for new compiler versions
         id: check
@@ -25,7 +28,7 @@ jobs:
       - name: Create Pull Request
         if: steps.check.outputs.updated == 'true'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.WORKFLOW_UPDATE_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

@@ -14,9 +14,9 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
-          node-version: '24'
+          node-version: '26'
           cache: 'npm'
 
       - name: Install Dependencies
@@ -30,6 +30,9 @@ jobs:
 
       - name: Run Tests
         run: npm test
+
+      - name: Test compiler version updater
+        run: python3 -B -m unittest discover -s scripts -p 'test_*.py'
 
       - name: Build
         run: npm run build
@@ -58,7 +61,7 @@ jobs:
         uses: ./
         with:
           compiler: 'xc8'
-          version: '3.10'
+          version: '4.00'
 
       - name: Verify XC8
         run: xc8-cc --version
